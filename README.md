@@ -200,3 +200,53 @@ cd ~/catkin_ws
 
 catkin_make
 ```
+
+5. miniconda 설치
+>참고링크: https://kynk94.github.io/devlog/post/jetson-nano-conda  
+> - https://github.com/conda-forge/miniforge/releases에 접속하여 Miniforge3-Linux-aarch64.sh 또는 Miniforge3-x.x.x-Linux-aarch64.sh를 다운  
+>다운 받은 bash 파일 실행(Miniforge3-Linux-aarch64.sh 자리에 다운 받은 파일 이름을 써야함!)
+```
+chmod +x Miniforge3-Linux-aarch64.sh
+./Miniforge3-Linux-aarch64.sh
+```
+>터미널 껐다 키기
+>가상환경을 만들어주기 위해 다음 명령어를 입력
+```
+conda create -n tensor27 python=2.7
+```
+>다음 명령어로 가상환경에 접속
+```
+conda activate tensor27
+```
+>ROS 패키지 설치
+```
+pip install -U rospkg
+```
+
+6. tensorflow 설치
+>참고주소:https://kynk94.github.io/devlog/post/jetson-nano-conda  
+>환경세팅  
+>! h5py 설치중 에러가 날 경우 다음을 차근차근 입력  
+>! pip install Cython  
+>! pip install h5py  
+```
+conda activate tensor27
+
+sudo apt-get update
+
+sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
+
+pip install testresources setuptools
+
+pip install numpy future mock h5py keras-preprocessing keras-applications futures protobuf pybind11
+```
+> 텐서플로우 설치
+```
+pip install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v33 tensorflow-gpu
+```
+> 텐서플로우 설치 확인
+```
+python
+
+import tensorflow
+```
