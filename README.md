@@ -2,11 +2,11 @@
 쿠도스 비전 레포지스토리입니다.
 ---
 
-공지
+# 공지
 
 ---
 
-설명
+# 설명
 - 환경세팅에 관하여
   >환경 세팅은 한줄씩 천천히 하세요
 
@@ -92,4 +92,78 @@ export ROS_HOSTNAME=localhost
 ```
 
 4. op3 설치
->참고 링크:https://emanual.robotis.com/docs/en/platform/op3/recovery/#recovery-of-robotis-op3
+>참고 링크:https://emanual.robotis.com/docs/en/platform/op3/recovery/#recovery-of-robotis-op3  
+>추가 로보티즈 ROS패키지를 설치한다.
+```
+sudo apt install libncurses5-dev v4l-utils
+
+sudo apt install madplay mpg321
+
+sudo apt install g++ git
+```
+>op3를 위한 ROS패키지를 설치한다.
+```
+cd ~/catkin_ws/src
+
+git clone https://github.com/ROBOTIS-GIT/face_detection.git
+
+cd ~/catkin_ws
+
+sudo apt install ros-kinetic-robot-upstart
+
+cd ~/catkin_ws/src
+
+git clone https://github.com/bosch-ros-pkg/usb_cam.git
+
+cd ~/catkin_ws
+
+catkin_make
+
+sudo apt install v4l-utils
+
+sudo apt install ros-kinetic-qt-ros
+```
+>humanoid navigation을 설치한다.
+```
+sudo apt-get install ros-kinetic-map-server
+
+sudo apt-get install ros-kinetic-humanoid-nav-msgs
+
+sudo apt-get install ros-kinetic-nav-msgs
+
+sudo apt-get install ros-kinetic-octomap
+
+sudo apt-get install ros-kinetic-octomap-ros
+
+sudo apt-get install ros-kinetic-octomap-server
+```
+>sbpl을 설치한다.
+```
+cd ~/catkin_ws/src
+
+git clone https://github.com/sbpl/sbpl.git
+
+cd sbpl
+
+mkdir build
+
+cd build
+
+cmake ..
+
+make
+
+sudo make install
+```
+>humanoid navigation을 마저 설치한다.
+>> ! catkin_make 중 humanoid_localization.cpp build에서 pcl/filters/uniform_sampling.h: No such file or directory 애러가 발생할수도 있는데 이는 op3가 pcl의 옛날 uniform_sampling의 패키지의 위치를 참조하기 때문에 발생하는 일임.  
+>> ! catkin_ws/src/humanoid_navigation/humanoid_localization/src/HumanoidLocalization.cpp를 gedit으로 열고 #include <pcl/filters/uniform_sampling.h>을 #include <pcl/keypoints/uniform_sampling.h>로 고치자
+```
+cd ~/catkin_ws/src
+
+git clone https://github.com/ROBOTIS-GIT/humanoid_navigation.git
+
+cd ~/catkin_ws
+
+catkin_make
+```
