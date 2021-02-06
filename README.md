@@ -167,3 +167,36 @@ cd ~/catkin_ws
 
 catkin_make
 ```
+>web_setting tools를 위한 패키지를 설치한다.
+```
+sudo apt install ros-kinetic-rosbridge-server ros-kinetic-web-video-server
+```
+>Robotis op3 Robotpackages를 설치하자
+>> !catkin_make 중 Robotis-OP3-Tools에서 action_editor 빌드 오류가 날 수도 있는데 깔끔하게 이 레포지스토리에 있는 ROBOTIS-OP3-Tools로 교체하면 해결된다.
+```
+cd ~/catkin_ws/src
+
+git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-Framework.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-Framework-msgs.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-Math.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-Demo.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-msgs.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-Tools.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-OP3-Common.git
+
+git clone https://github.com/ROBOTIS-GIT/ROBOTIS-Utility.git
+
+cd ~/catkin_ws
+
+catkin_make
+```
