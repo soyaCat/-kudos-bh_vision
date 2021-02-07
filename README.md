@@ -326,7 +326,9 @@ python darknet_images.py
   6. code Runner 설치
   7. ctrl+shift+p를 눌러준 후 Python:Select Interpreter를 눌러주기
   8. 목록 중 이 튜토리얼에서 만든 tensor27을 선택하기
-  9. 이제 파이썬에서 tensorflow 같은 외부 라이브러리 사용시 자동 완성 기능이 기능하게 됩니다.
 >이제 cpp파일을 열거나 python 파일등 문서 파일을 열 때 code 파일이름 을 치시면 됩니다.  
->cpp 위주로 편집하신다면 파이썬 편집을 위한 세팅 대신 검색하셔서 알맞은 환경 세팅을 부탁드립니다.
+>cpp 위주로 편집하신다면 파이썬 편집을 위한 세팅 대신 검색하셔서 알맞은 환경 세팅을 부탁드립니다.  
+>http://wanochoi.com/?p=4643에 따라 pycharm을 설치한다면 pycharm 실행 명령어는 다음과 같습니다.  
+>sudo pycharm.sh  
+>pycharm을 설치하시고 인터프리터 연결을 python 가상환경과 연결하면 자동 완성 기능 사용가능
 
