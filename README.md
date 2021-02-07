@@ -309,15 +309,13 @@ python darknet_images.py
 ```
 
 8. 쉬운 코드 편집 작업을 위한 VScode 설치
->참고 주소: https://opencourse.tistory.com/221
->참고 주소: https://mylogcenter.tistory.com/7
+>참고 주소: https://opencourse.tistory.com/221  
+>참고 주소: https://mylogcenter.tistory.com/7  
+>참고 주소: https://makingrobot.tistory.com/83  
 >설치
 ```
-git clone https://github.com/JetsonHacksNano/installVSCode.git
-
-cd installVSCode
-
-./installVSCode.sh
+1. https://github.com/toolboc/vscode/releases에서 release 다운로드
+2. 다운이 완료되면 다음 명령어로 설치진행 sudo dpkg -i code-oss_1.32.3-arm64.deb
 ```
 >파이썬 편집을 위한 세팅(필수 아님)(하지만 하면 좋음)
   1. VScode로 들어간다.
@@ -325,9 +323,10 @@ cd installVSCode
   3. Visual Studio IntelliCode 설치
   4. Python for VSCode 설치
   5. Python Extension Pack 설치
+  6. code Runner 설치
   6. ctrl+shift+p를 눌러준 후 Python:Select Interpreter를 눌러주기
   7. 목록 중 이 튜토리얼에서 만든 tensor27을 선택하기
   8. 이제 파이썬에서 tensorflow 같은 외부 라이브러리 사용시 자동 완성 기능이 기능하게 됩니다.
->이제 cpp파일을 열거나 python 파일등 문서 파일을 열 때 code 파일이름 을 치시면 됩니다.  
+>이제 cpp파일을 열거나 python 파일등 문서 파일을 열 때 code-oss 파일이름 을 치시면 됩니다.  
 >cpp 위주로 편집하신다면 파이썬 편집을 위한 세팅 대신 검색하셔서 알맞은 환경 세팅을 부탁드립니다.
 
