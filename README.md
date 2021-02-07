@@ -332,3 +332,19 @@ python darknet_images.py
 >sudo pycharm.sh  
 >pycharm을 설치하시고 인터프리터 연결을 python 가상환경과 연결하면 자동 완성 기능 사용가능
 
+---
+
+# 노트북 환경 세팅
+
+- 위 환경세팅을 따라했다면 jetson에는 최종적으로 cuda 9.0, cudnn, opencv 3.3.1, yoloV4, op3가 설치되고  
+   jetson의 anaconda 가상환경에는 python2.7, tensorflow-gpu 0.14.0, ros관련패키지가 설치되게 된다.  
+- 노트북 우분투에서도 같은 환경으로 빌드하면 yolo나 tensorflow 훈련 파일을 공유해서 사용하거나 파이썬 코드 파일을 돌릴 수 있어 편하다  
+!!!!!!!!!!nvidia그래픽 카드가 없는 노트북이라면 yolo나 텐서플로우를 cpu버전으로 사용해야 하는데 코드나 가중치값이 제대로 호환될 것이라는 것을 보장할 수 없다  
+!!!!!!!!!!이 가이드는 nvidia 그래픽카드가 있는 컴퓨터를 기준으로 가이드가 진행된다.
+
+
+1. 노트북의 그래픽카드를 업데이트 하고 cuda9.0과 그에 맞는 cudnn을 설치한다.
+>참고: https://jdselectron.tistory.com/85
+
+
+
