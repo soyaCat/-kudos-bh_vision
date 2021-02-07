@@ -23,7 +23,7 @@
 1. op3와의 호환성을 위하여 jetson tx2에 jetpack 3.3을 설치한다
 >jetpack3.3은 우분투 16.04를 지원하는 가장 최신 버전의 jetson os 이미지이다.  
 >op3가 ROS melodic을 지원하지 않는 이상 jetpack 3.3 사용이 최선  
->cudnn 7.6.5를 따로 설치하면 gpu  
+>cudnn 7.6.5를 따로 설치하면 gpu 성능을 
 
 
 2. 우분투 패키지를 업데이트 한다.  
