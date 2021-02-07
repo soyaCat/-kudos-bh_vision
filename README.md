@@ -3,12 +3,14 @@
 ---
 
 # 공지
+ - 버그, 문제 발생, 개선점 제안은 issues에 제안 부탁드립니다.
 
 ---
 
 # 설명
 - 환경세팅에 관하여
-  >환경 세팅은 한줄씩 천천히 하세요
+  >환경 세팅은 한줄씩 천천히 하세요  
+  >환경 세팅은 오래 걸립니다. 여유를 가지고 진행하세요  
 
 - op3_ini_env 폴더
   >빌드가 되는 것을 확인한 op3에 관련된 것만 있는 폴더입니다.
@@ -250,3 +252,82 @@ python
 
 import tensorflow
 ```
+
+7. YOLO V4 설치
+>참고주소: https://wendys.tistory.com/143  
+>참고주소: https://eehoeskrap.tistory.com/355  
+>참고주소: https://github.com/AlexeyAB/darknet#yolo-v4-in-other-frameworks  
+>가상환경 활성화
+```
+conda activate tensor27
+```
+>쿠다 path 불러오기
+```
+sudo apt-get update
+
+export PATH=/usr/local/cuda-9.0/bin${PATH:+:${PATH}}
+
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+```
+>yolo project download
+```
+cd ~/catkin_ws/src
+
+git clone https://github.com/AlexeyAB/darknet
+
+cd darknet
+
+wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights
+
+wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights
+```
+>make file 하기
+```
+sudo gedit Makefile
+```
+>다음과 같이 수정 후 저장
+```
+GPU=1
+CUDNN=1
+OPENCV=1
+LIBSO=1
+```
+>make
+```
+make
+```
+>설치 완료 테스트
+```
+python darknet_images.py
+
+#이미지 경로입력이 나오면 다음을 입력
+#"./data/dog.jpg"
+```
+
+8. 쉬운 코드 편집 작업을 위한 VScode 설치
+>참고 주소: https://opencourse.tistory.com/221
+>참고 주소: https://mylogcenter.tistory.com/7
+>설치
+```
+git clone https://github.com/JetsonHacksNano/installVSCode.git
+
+cd installVSCode
+
+./installVSCode.sh
+```
+>파이썬 편집을 위한 세팅(필수 아님)(하지만 하면 좋음)
+  1. VScode로 들어간다.
+  2. Extension에서 python 설치
+  3. Visual Studio IntelliCode 설치
+  4. Python for VSCode 설치
+  5. Python Extension Pack 설치
+  6. ctrl+shift+p를 눌러준 후 Python:Select Interpreter를 눌러주기
+  7. 목록 중 이 튜토리얼에서 만든 tensor27을 선택하기
+  8. 이제 파이썬에서 tensorflow 같은 외부 라이브러리 사용시 자동 완성 기능이 기능하게 됩니다.
+>이제 cpp파일을 열거나 python 파일등 문서 파일을 열 때 code 파일이름 을 치시면 됩니다.  
+>cpp 위주로 편집하신다면 파이썬 편집을 위한 세팅 대신 검색하셔서 알맞은 환경 세팅을 부탁드립니다.
+
