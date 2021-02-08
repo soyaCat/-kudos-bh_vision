@@ -17,3 +17,13 @@
   >op3 빌드 중 문제가 발생시 문제가 되는 파일을 op3_ini_env 폴더 내부의 파일로 교체하세요
 
 ---
+
+# 최신 비전으로 패치방법
+- git clone으로 레포지스토리를 복사하거나 zip파일을 다운받는다.
+- darknet폴더에 복사한 내용물을 넣어준다. 겹치는 파일은 덮어쓰기 처리를 해준다.
+- ros 메인 폴더로 가서 catkin_make수행
+- 오류가 안 났다면 메인폴더/src/darknet으로 가서 아나콘다 가상환경 실행
+- python을 입력해서 인터프리터 창에 들어간 후 , import rospy, import cv2, import tensorflow를 차례로 수행해준다.
+- 오류가 안났다면 ctrl+z를 눌러서 인터프리터 창을 나간다.
+- python darknet_images.py를 입력해서 darknet 작동을 확인
+- 여기까지 오류가 안났다면 내 패치에 문제가 없다는 거니까 다행입니다.
