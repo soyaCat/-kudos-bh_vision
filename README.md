@@ -349,6 +349,19 @@ python darknet_images.py
 
 1. 노트북의 그래픽카드를 업데이트 하고 cuda9.0과 그에 맞는 cudnn을 설치한다.
 >참고: https://jdselectron.tistory.com/85
+2. ros를 설치한다.
+3. op3를 설치한다.(이때 시스템 파이썬이 2.7버전이여야 한다.)
+4. anaconda를 설치한다.
+>(ros와 anaconda 정식 릴리즈 사이에는 충돌이 발생할 수도 있다.)  
+>참고:https://www.youtube.com/watch?v=EMF20z-gT5s 를 보면서 해결하면 된다.
+5. 아나콘다에 가상환경(python=2.7)을 만들어주고 opencv 3.3.1과 tensorflow-gpu 0.14.0 을 설치해준다.
+```
+#가상환경 활성화
+pip install --ignore-installed --upgrade tensorflow==1.15.0
+#opencv는 3.3.1버전으로 다운로드
+```
+6. yoloV4를 설치한다.
+
 
 
 
