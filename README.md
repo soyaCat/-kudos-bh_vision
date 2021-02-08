@@ -113,6 +113,8 @@ git clone https://github.com/ROBOTIS-GIT/face_detection.git
 
 cd ~/catkin_ws
 
+catkin_make
+
 sudo apt install ros-kinetic-robot-upstart
 
 cd ~/catkin_ws/src
