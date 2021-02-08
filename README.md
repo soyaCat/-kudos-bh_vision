@@ -336,6 +336,8 @@ python darknet_images.py
 >sudo pycharm.sh  
 >pycharm을 설치하시고 인터프리터 연결을 python 가상환경과 연결하면 자동 완성 기능 사용가능
 
+## 빌드 중 em관련 에러가 나면 pip install empy를 해주시면 됩니다.
+
 ---
 
 # 노트북 환경 세팅
