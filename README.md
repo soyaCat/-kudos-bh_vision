@@ -29,10 +29,10 @@
 - 여기까지 오류가 안났다면 내 패치에 문제가 없다는 거니까 다행입니다.
 
 - !파이썬이 커스텀 메세지를 임포트하지 못할 때:   
-https://answers.ros.org/question/105711/rospy-custom-message-importerror-no-module-named-msg/
 
-https://answers.ros.org/question/271620/importerror-no-module-named-xxxxmsg/
+>https://answers.ros.org/question/105711/rospy-custom-message-importerror-no-module-named-msg/  
+>https://answers.ros.org/question/271620/importerror-no-module-named-xxxxmsg/  
 
-- 나의 경우에는 darknet폴더를 darknetA로 바꾸고
+- 나의 경우에는 darknet폴더를 darknetA로 바꾼다
 - catkin_make 작업 이후에 source devel/setup.bash를 해주었다.  
 - 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.
