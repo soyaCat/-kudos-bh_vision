@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>python_test</name>
+  <name>darknet</name>
   <version>0.0.0</version>
-  <description>The python_test package</description>
+  <description>The darknet package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
