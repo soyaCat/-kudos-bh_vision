@@ -30,3 +30,5 @@
 /video_yolov4.sh
 /yolov4-tiny.weights
 /yolov4.weights
+
+/op3_ini_env

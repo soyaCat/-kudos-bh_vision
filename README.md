@@ -19,20 +19,18 @@
 ---
 
 # 최신 비전으로 패치방법
+- catkin_ws/src/darknet 폴더를 darknetA로 이름을 바꾼다.
 - git clone으로 레포지스토리를 복사하거나 zip파일을 다운받는다.
-- darknet폴더에 복사한 내용물을 넣어준다. 겹치는 파일은 덮어쓰기 처리를 해준다.
-- ros 메인 폴더로 가서 catkin_make수행
-- 오류가 안 났다면 메인폴더/src/darknet으로 가서 아나콘다 가상환경 실행
-- python을 입력해서 인터프리터 창에 들어간 후 , import rospy, import cv2, import tensorflow를 차례로 수행해준다.
-- 오류가 안났다면 ctrl+z를 눌러서 인터프리터 창을 나간다.
+- darknetA폴더에 복사한 내용물을 넣어준다. 겹치는 파일은 덮어쓰기 처리를 해준다.
+- catkin_ws 폴더로 가서 catkin_make수행
+- 오류가 안 났다면 메인폴더/src/darknetA로 가서 아나콘다 가상환경 실행
+- python Kudos_test.py를 실행해본다.
+- rosrun darknetA topic_subscriber를 실행해본다.
 - python darknet_images.py를 입력해서 darknet 작동을 확인
-- 여기까지 오류가 안났다면 내 패치에 문제가 없다는 거니까 다행입니다.
+- 여기까지 동작하면 패치 성공입니다.
 
 - !파이썬이 커스텀 메세지를 임포트하지 못할 때:   
-
->https://answers.ros.org/question/105711/rospy-custom-message-importerror-no-module-named-msg/  
->https://answers.ros.org/question/271620/importerror-no-module-named-xxxxmsg/  
-
-- 나의 경우에는 darknet폴더를 darknetA로 바꾼다
-- catkin_make 작업 이후에 source devel/setup.bash를 해주었다.  
-- 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.
+    >참고문서: https://answers.ros.org/question/105711/rospy-custom-message-importerror-no-module-named-msg/  
+    >참고문서: https://answers.ros.org/question/271620/importerror-no-module-named-xxxxmsg/
+    - catkin_make 작업 이후에 source devel/setup.bash를 해주었다.  
+    - 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.
