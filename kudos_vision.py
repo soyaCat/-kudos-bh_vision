@@ -12,6 +12,9 @@ import time
 turnon_darknet = True
 
 class priROS():
+    def __init__(self):
+        pass
+
     def talker(self, posX, posY):
         pub = rospy.Publisher('visionPos', position, queue_size=10)
         rospy.init_node('visiontalker', anonymous = True)
@@ -38,6 +41,9 @@ if __name__=='__main__':
         frame = kudos_darknet.getResults_with_darknet(cap, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
         if np.any(frame) != False:
             cv2.imshow("showIMG", frame)
+        posX = 100
+        posY = 50
+        priROS.talker(posX, posY)
         k = cv2.waitKey(1) 
         if k == 27:
             break
