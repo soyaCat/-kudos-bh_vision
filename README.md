@@ -34,3 +34,17 @@
     >참고문서: https://answers.ros.org/question/271620/importerror-no-module-named-xxxxmsg/
     >- catkin_make 작업 이후에 source devel/setup.bash를 해주었다.  
     >- 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.
+    
+    
+   ---
+   
+   # 비전 실행 방법
+    - 터미널상에서 cd catkin_ws/src/darknetA로 간다.
+    - 아나콘다 가상환경을 활성화해준다. source activate tensor27
+    - python kudos_vision.py로 비전프로그램을 실행시켜준다.
+    - 비전 결과는 message로 전송되는데 darknetA/position.msg파일을 임포트해주면 메세지를 읽을 수 있다.
+    >팁  
+    >우분투 메인폴더에서 ctrl+h를 누르면 숨겨진 파일들이 보이는데 .bashrc를 gedit으로 열어서 맨 밑에  
+    >cd catkin_ws/src/darknetA  
+    >source activate tensor27  
+    >를 추가해주면 터미널을 열 때마다 darknetA폴더에서 tensor27가상환경이 활성화 되어있는 상태로 터미널을 열 수 있다.
