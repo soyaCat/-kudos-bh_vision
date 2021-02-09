@@ -32,5 +32,5 @@
 - !파이썬이 커스텀 메세지를 임포트하지 못할 때:   
     >참고문서: https://answers.ros.org/question/105711/rospy-custom-message-importerror-no-module-named-msg/  
     >참고문서: https://answers.ros.org/question/271620/importerror-no-module-named-xxxxmsg/
-    - catkin_make 작업 이후에 source devel/setup.bash를 해주었다.  
-    - 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.
+    >- catkin_make 작업 이후에 source devel/setup.bash를 해주었다.  
+    >- 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.
