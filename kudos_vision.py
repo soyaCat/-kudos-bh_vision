@@ -11,7 +11,6 @@ import time
 
 turnon_darknet = True
 
-
 class priROS():
     def talker(self, posX, posY):
         pub = rospy.Publisher('visionPos', position, queue_size=10)
