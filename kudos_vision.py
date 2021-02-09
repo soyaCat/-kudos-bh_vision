@@ -31,7 +31,6 @@ if __name__=='__main__':
     kudos_darknet.check_arguments_errors(darknet_config_args)
     darknet_network, darknet_class_names, darknet_class_colors, darknet_width, darknet_height = kudos_darknet.Initialize_darknet(darknet_config_args)
     cap = cv2.VideoCapture(-1)
-
     priROS = priROS()
     if turnon_darknet == True:
         pass
