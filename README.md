@@ -43,6 +43,8 @@
     - 아나콘다 가상환경을 활성화해준다. source activate tensor27
     - python kudos_vision.py로 비전프로그램을 실행시켜준다.
     - 비전 결과는 message로 전송되는데 darknetA/position.msg파일을 임포트해주면 메세지를 읽을 수 있다.
+    - 비전 결과를 읽어오는 cpp를 topic_subcriber.cpp에 만들어놓았다. 이것을 참고해서 cpp파일을 수정할 것
+    - 만약 topic_subscriber.cpp를 실행하고 싶다면 다음 명령을 사용한다. 
     >팁  
     >우분투 메인폴더에서 ctrl+h를 누르면 숨겨진 파일들이 보이는데 .bashrc를 gedit으로 열어서 맨 밑에  
     >cd catkin_ws/src/darknetA  
