@@ -5,7 +5,7 @@ import cv2
 import time
 import darknet
 import argparse
-from threading import Thread, enumerate
+from threading import Thread
 from Queue import Queue
 
 
@@ -62,7 +62,7 @@ def set_saved_video(input_video, output_video, size):
 def Initialize_darknet(args):
     network, class_names, class_colors = darknet.load_network(
         args.config_file,
-        args.data_file,
+        args.data_file, 
         args.weights,
         batch_size=1,
     )
@@ -97,13 +97,14 @@ def getResults_with_darknet(cap, darknet_input_width, darknet_input_height, dark
         darknet.free_image(img_for_detect)
         random.seed(3)  # deterministic bbox colors
         video = set_saved_video(cap, config_args.out_filename, (darknet_input_width, darknet_input_height))
+
         if frame_resized is not None:
             image = darknet.draw_boxes(detections, frame_resized, darknet_class_colors)
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             if config_args.out_filename is not None:
                 video.write(image)
             if not config_args.dont_show:
-                return image
+                return image, detections
 
 
     '''

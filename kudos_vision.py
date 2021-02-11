@@ -6,10 +6,8 @@ import darknet
 import rospy
 from darknetA.msg import position
 import kudos_darknet
-from Queue import Queue
+from collections import deque
 import time
-
-turnon_darknet = True
 
 class priROS():
     def __init__(self):
@@ -24,25 +22,37 @@ class priROS():
         rospy.loginfo(message)
         pub.publish(message)
 
+class DataFormatTransfer():
+    def __init__(self):
+        pass
+    
+    def get_one_center_from_detections(self, detections, label):
+        max_confidence = 0
+        objectCenter = [-1,-1]
+        for detections_index,detection in enumerate(detections):
+            #print(detection)#(label, confidence, (left, top, right, bottom))
+            if detection[0] == label:
+                if detection[1]>max_confidence:
+                    max_confidence = detection[1]
+                    bbox = detection[2]
+                    objectCenter = [bbox[2]+(bbox[0]-bbox[2])/2, bbox[3]+(bbox[1]-bbox[3])/2]
+        return objectCenter
+
 if __name__=='__main__':
-    frame_queue = Queue()
-    darknet_image_queue = Queue(maxsize=1)
-    detections_queue = Queue(maxsize=1)
-    fps_queue = Queue(maxsize=1)
     darknet_config_args = kudos_darknet.parser()
     kudos_darknet.check_arguments_errors(darknet_config_args)
     darknet_network, darknet_class_names, darknet_class_colors, darknet_width, darknet_height = kudos_darknet.Initialize_darknet(darknet_config_args)
     cap = cv2.VideoCapture(-1)
     priROS = priROS()
-    if turnon_darknet == True:
-        pass
+    DataFormatTransfer = DataFormatTransfer()
 
     while True:
-        frame = kudos_darknet.getResults_with_darknet(cap, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
+        frame, detections = kudos_darknet.getResults_with_darknet(cap, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
+        peopleCenter = DataFormatTransfer.get_one_center_from_detections(detections, label='person')
         if np.any(frame) != False:
             cv2.imshow("showIMG", frame)
-        posX = 100
-        posY = 50
+        posX = peopleCenter[0]
+        posY = peopleCenter[1]
         priROS.talker(posX, posY)
         k = cv2.waitKey(1) 
         if k == 27:
