@@ -324,7 +324,7 @@ python darknet_images.py
 # 노트북 환경 세팅
 
 - 위 환경세팅을 따라했다면 jetson에는 최종적으로 cuda 9.0, cudnn, opencv 3.3.1, yoloV4, op3가 설치되고  
-   jetson의 anaconda 가상환경에는 python2.7, tensorflow-gpu 0.14.0, ros관련패키지가 설치되게 된다.  
+   jetson의 anaconda 가상환경에는 python2.7, tensorflow-gpu 1.14.0, ros관련패키지가 설치되게 된다.  
 - 노트북 우분투에서도 같은 환경으로 빌드하면 yolo나 tensorflow 훈련 파일을 공유해서 사용하거나 파이썬 코드 파일을 돌릴 수 있어 편하다  
 !!!!!!!!!!nvidia그래픽 카드가 없는 노트북이라면 yolo나 텐서플로우를 cpu버전으로 사용해야 하는데 코드나 가중치값이 제대로 호환될 것이라는 것을 보장할 수 없다  
 !!!!!!!!!!이 가이드는 nvidia 그래픽카드가 있는 컴퓨터를 기준으로 가이드가 진행된다.
@@ -337,10 +337,10 @@ python darknet_images.py
 4. anaconda를 설치한다.
 >(ros와 anaconda 정식 릴리즈 사이에는 충돌이 발생할 수도 있다.)  
 >참고:https://www.youtube.com/watch?v=EMF20z-gT5s 를 보면서 해결하면 된다.
-5. 아나콘다에 가상환경(python=2.7)을 만들어주고 opencv 3.3.1과 tensorflow-gpu 0.14.0 을 설치해준다.
+5. 아나콘다에 가상환경(python=2.7)을 만들어주고 opencv 3.3.1과 tensorflow-gpu 1.14.0 을 설치해준다.
 ```
 #가상환경 활성화
-pip install --ignore-installed --upgrade tensorflow==1.15.0
+pip install --ignore-installed --upgrade tensorflow==1.14.0
 #opencv는 3.3.1버전으로 다운로드
 ```
 6. yoloV4를 설치한다.
