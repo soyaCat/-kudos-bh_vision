@@ -297,7 +297,7 @@ python darknet_images.py
 >최종적으로 catkin_make를 하여 빌드 테스트를 해봅니다.  
 >!catkin_make를 하다가 rospkg를 찾을 수 없다는 에러가 나오면 다음을 해봅니다.  
 >!터미널을 새로 열고 가상환경(tensor27)이 활성화 되지 않은 상태로  
->!pip install -U rospkg를 
+>!pip install -U rospkg를 입력하고 다시 catkin_make를 
 
 8. 쉬운 코드 편집 작업을 위한 VScode 설치
 >참고 주소: https://opencourse.tistory.com/221  
