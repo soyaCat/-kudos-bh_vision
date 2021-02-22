@@ -42,7 +42,8 @@ if __name__=='__main__':
     darknet_config_args = kudos_darknet.parser()
     kudos_darknet.check_arguments_errors(darknet_config_args)
     darknet_network, darknet_class_names, darknet_class_colors, darknet_width, darknet_height = kudos_darknet.Initialize_darknet(darknet_config_args)
-    cap = cv2.VideoCapture(-1)
+    cap = cv2.VideoCapture(1)
+    #cap = cv2.VideoCapture("test.mp4")
     priROS = priROS()
     DataFormatTransfer = DataFormatTransfer()
 
