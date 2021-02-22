@@ -8,17 +8,23 @@ from darknetA.msg import position
 import kudos_darknet
 from collections import deque
 import time
+import zmq
+import zmqnumpy as znp
+
+detect_from_virtual_ENV = False
 
 class priROS():
     def __init__(self):
         pass
 
-    def talker(self, posX, posY):
+    def talker(self, posX, posY, goalposX, goalposY):
         pub = rospy.Publisher('visionPos', position, queue_size=10)
         rospy.init_node('visiontalker', anonymous = True)
         message = position()
         message.posX = posX
         message.posY = posY
+        message.goalposX = goalposX
+        message.goalposY = goalposY
         rospy.loginfo(message)
         pub.publish(message)
 
@@ -28,8 +34,8 @@ class DataFormatTransfer():
     
     def get_one_center_from_detections(self, detections, label):
         max_confidence = 0
-        objectCenter = [-1,-1]
-        for detections_index,detection in enumerate(detections):
+        objectCenter = [-1.0,-1.0]
+        for detections_index, detection in enumerate(detections):
             #print(detection)#(label, confidence, (left, top, right, bottom))
             if detection[0] == label:
                 if detection[1]>max_confidence:
@@ -38,34 +44,82 @@ class DataFormatTransfer():
                     objectCenter = [bbox[0], bbox[1]]
         return objectCenter
 
-    def mapping_point_to_float_shape(self, npArr, objectCenter):
-        im_width_size = np.shape(npArr)[0]
-        im_hight_size = np.shape(npArr)[1]
-        objectCenter[0] = objectCenter[0]/im_width_size
-        objectCenter[1] = objectCenter[1]/im_hight_size
+    def get_mean_center_from_detections(self, detections, label):
+        objectCenter = [-1.0,-1.0]
+        object_width_list = []
+        object_height_list = []
+        detect_flag = False
+        for detections_index, detection in enumerate(detections):
+            #print(detection)#(label, confidence, (left, top, right, bottom))
+            if detection[0] == label:
+                bbox = detection[2]
+                object_width_list.append(bbox[0])
+                object_height_list.append(bbox[1])
+                detect_flag = True
+        if detect_flag == True:
+            objectCenter = [np.mean(object_width_list), np.mean(object_height_list)]
 
         return objectCenter
+
+    def mapping_point_to_float_shape(self, npArr, objectCenter):
+        if objectCenter != [-1.0, -1.0]:
+            im_width_size = np.shape(npArr)[0]
+            im_hight_size = np.shape(npArr)[1]
+            objectCenter[0] = objectCenter[0]/im_width_size
+            objectCenter[1] = objectCenter[1]/im_hight_size
+
+        return objectCenter
+
+def get_socket():
+    host_address = "tcp://192.168.0.20:9010"
+    context = zmq.Context()
+    #Socket to talk to server
+    print("Connecting to hello world server...")
+    socket = context.socket(zmq.REQ)
+    socket.connect(host_address)
+    socket.send(b"hello, this is kudos_vision!")
+
+    return socket
 
 if __name__=='__main__':
     darknet_config_args = kudos_darknet.parser()
     kudos_darknet.check_arguments_errors(darknet_config_args)
     darknet_network, darknet_class_names, darknet_class_colors, darknet_width, darknet_height = kudos_darknet.Initialize_darknet(darknet_config_args)
-    #cap = cv2.VideoCapture(-1)
-    cap = cv2.VideoCapture("test.mp4")
+    global cap
+    global socket
+    if detect_from_virtual_ENV == False:
+        cap = cv2.VideoCapture(-1)
+        #cap = cv2.VideoCapture("test.mp4")
+    else:
+        socket = get_socket()
     priROS = priROS()
     DataFormatTransfer = DataFormatTransfer()
 
     while True:
-        frame, detections = kudos_darknet.getResults_with_darknet(cap, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
-        ballCenter = DataFormatTransfer.get_one_center_from_detections(detections, label='ball')
-        print(ballCenter)
-        ballCenter = DataFormatTransfer.mapping_point_to_float_shape(frame, ballCenter)
-        print(ballCenter)
+        if detect_from_virtual_ENV == False:
+            ret, frame = cap.read()
+        else:
+            frame = znp.recv_array(socket)
+            ret = True
+        frame, detections = kudos_darknet.getResults_with_darknet(ret, frame, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
+        ballCenter = [-1.0, -1.0]
+        goalCenter = [-1.0, -1.0]
         if np.any(frame) != False:
             cv2.imshow("showIMG", frame)
+            ballCenter = DataFormatTransfer.get_one_center_from_detections(detections, label='ball')
+            ballCenter = DataFormatTransfer.mapping_point_to_float_shape(frame, ballCenter)
+            goalCenter = DataFormatTransfer.get_mean_center_from_detections(detections, label='goal')
+            goalCenter = DataFormatTransfer.mapping_point_to_float_shape(frame, goalCenter)
         posX = ballCenter[0]
         posY = ballCenter[1]
-        priROS.talker(posX, posY)
+        goalposX = goalCenter[0]
+        goalposY = goalCenter[1]
+        if detect_from_virtual_ENV == False:
+            priROS.talker(posX, posY, goalposX, goalposY)
+        else:
+            position_list = [posX, posY, goalposX, goalposY]
+            position_npArr = np.array(position_list)
+            znp.send_array(socket, position_npArr)
         k = cv2.waitKey(1) 
         if k == 27:
             break

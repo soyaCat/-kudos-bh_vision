@@ -53,9 +53,10 @@ def check_arguments_errors(args):
         raise(ValueError("Invalid video path {}".format(os.path.abspath(args.input))))
 
 
-def set_saved_video(input_video, output_video, size):
+def set_saved_video(output_video, size):
     fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-    fps = int(input_video.get(cv2.CAP_PROP_FPS))
+    #fps = int(input_video.get(cv2.CAP_PROP_FPS))
+    fps = 60
     video = cv2.VideoWriter(output_video, fourcc, fps, size)
     return video
 
@@ -76,9 +77,8 @@ def open_Threads(network, class_names, class_colors ,width, height, cap, frame_q
     Thread(target=inference, args=(network, class_names, cap, darknet_image_queue, detections_queue, fps_queue, myargs)).start()
     Thread(target=drawing, args=(cap, frame_queue, detections_queue, fps_queue, myargs, width, height, class_colors)).start()
 
-def getResults_with_darknet(cap, darknet_input_width, darknet_input_height, darknet_network, darknet_class_names, darknet_class_colors,config_args):
-    ret, frame = cap.read()
-    if cap.isOpened() and ret != False:
+def getResults_with_darknet(ret, frame, darknet_input_width, darknet_input_height, darknet_network, darknet_class_names, darknet_class_colors,config_args):
+    if ret != False:
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_resized = cv2.resize(frame_rgb, (darknet_input_width, darknet_input_height),
                                    interpolation=cv2.INTER_LINEAR)
@@ -96,7 +96,7 @@ def getResults_with_darknet(cap, darknet_input_width, darknet_input_height, dark
         darknet.print_detections(detections, config_args.ext_output)
         darknet.free_image(img_for_detect)
         random.seed(3)  # deterministic bbox colors
-        video = set_saved_video(cap, config_args.out_filename, (darknet_input_width, darknet_input_height))
+        video = set_saved_video(config_args.out_filename, (darknet_input_width, darknet_input_height))
 
         if frame_resized is not None:
             image = darknet.draw_boxes(detections, frame_resized, darknet_class_colors)
