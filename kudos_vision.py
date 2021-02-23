@@ -12,6 +12,8 @@ import zmq
 import zmqnumpy as znp
 
 detect_from_virtual_ENV = False
+capture_target = "test.mp4" #-1
+host_address = "tcp://192.168.0.20:9010"#localhost
 
 class priROS():
     def __init__(self):
@@ -70,8 +72,7 @@ class DataFormatTransfer():
 
         return objectCenter
 
-def get_socket():
-    host_address = "tcp://192.168.0.20:9010"
+def get_socket_and_send_ini_message(host_adress):
     context = zmq.Context()
     #Socket to talk to server
     print("Connecting to hello world server...")
@@ -85,13 +86,10 @@ if __name__=='__main__':
     darknet_config_args = kudos_darknet.parser()
     kudos_darknet.check_arguments_errors(darknet_config_args)
     darknet_network, darknet_class_names, darknet_class_colors, darknet_width, darknet_height = kudos_darknet.Initialize_darknet(darknet_config_args)
-    global cap
-    global socket
     if detect_from_virtual_ENV == False:
-        cap = cv2.VideoCapture(-1)
-        #cap = cv2.VideoCapture("test.mp4")
+        cap = cv2.VideoCapture(capture_target)
     else:
-        socket = get_socket()
+        socket = get_socket_and_send_ini_message(host_address)
     priROS = priROS()
     DataFormatTransfer = DataFormatTransfer()
 
