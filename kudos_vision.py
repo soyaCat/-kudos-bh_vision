@@ -12,8 +12,8 @@ import zmq
 import zmqnumpy as znp
 
 detect_from_virtual_ENV = True
-#capture_target = "test.mp4" #-1
-capture_target = -1 
+capture_target = "test.mp4" #-1
+#capture_target = -1 
 #host_address = "tcp://192.168.0.20:9010"
 host_address = "tcp://localhost:9010"
 
