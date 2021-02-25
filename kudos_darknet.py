@@ -25,7 +25,7 @@ def parser():
                         help="path to config file")
     parser.add_argument("--data_file", default="kudos_obj.data",
                         help="path to data file")
-    parser.add_argument("--thresh", type=float, default=.50,
+    parser.add_argument("--thresh", type=float, default=.30,
                         help="remove detections with confidence below this value")
     return parser.parse_args()
 
@@ -82,16 +82,11 @@ def getResults_with_darknet(ret, frame, darknet_input_width, darknet_input_heigh
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_resized = cv2.resize(frame_rgb, (darknet_input_width, darknet_input_height),
                                    interpolation=cv2.INTER_LINEAR)
-        ##frame_queue.put(frame_resized)
         img_for_detect = darknet.make_image(darknet_input_width, darknet_input_height, 3)
         darknet.copy_image_from_bytes(img_for_detect, frame_resized.tobytes())
-        ##darknet_image_queue.put(img_for_detect)
-        #darknet_image = darknet_image_queue.get()
         prev_time = time.time()
         detections = darknet.detect_image(darknet_network, darknet_class_names, img_for_detect, thresh=config_args.thresh)
-        #detections_queue.put(detections)
         fps = int(1/(time.time() - prev_time))
-        #fps_queue.put(fps)
         print("FPS: {}".format(fps))
         darknet.print_detections(detections, config_args.ext_output)
         darknet.free_image(img_for_detect)
@@ -105,55 +100,3 @@ def getResults_with_darknet(ret, frame, darknet_input_width, darknet_input_heigh
                 video.write(image)
             if not config_args.dont_show:
                 return image, detections
-
-
-    '''
-def video_capture(width, height, cap, frame_queue, darknet_image_queue):
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame_resized = cv2.resize(frame_rgb, (width, height),
-                                   interpolation=cv2.INTER_LINEAR)
-        frame_queue.put(frame_resized)
-        img_for_detect = darknet.make_image(width, height, 3)
-        darknet.copy_image_from_bytes(img_for_detect, frame_resized.tobytes())
-        darknet_image_queue.put(img_for_detect)
-    cap.release()
-
-
-def inference(network, class_names, cap, darknet_image_queue, detections_queue, fps_queue, args):
-    while cap.isOpened():
-        darknet_image = darknet_image_queue.get()
-        prev_time = time.time()
-        detections = darknet.detect_image(network, class_names, darknet_image, thresh=args.thresh)
-        detections_queue.put(detections)
-        fps = int(1/(time.time() - prev_time))
-        fps_queue.put(fps)
-        print("FPS: {}".format(fps))
-        darknet.print_detections(detections, args.ext_output)
-        darknet.free_image(darknet_image)
-    cap.release()
-
-
-def drawing(cap, frame_queue, detections_queue, fps_queue, args,width, height, class_colors):
-    random.seed(3)  # deterministic bbox colors
-    video = set_saved_video(cap, args.out_filename, (width, height))
-    while cap.isOpened():
-        frame_resized = frame_queue.get()
-        detections = detections_queue.get()
-        fps = fps_queue.get()
-        if frame_resized is not None:
-            image = darknet.draw_boxes(detections, frame_resized, class_colors)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            if args.out_filename is not None:
-                video.write(image)
-            if not args.dont_show:
-                cv2.imshow('Inference', image)
-            if cv2.waitKey(fps) == 27:
-                break
-    cap.release()
-    video.release()
-    cv2.destroyAllWindows()
-'''
