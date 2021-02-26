@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/soya/anaconda3/envs/tensor27/bin/python"
+    "python.pythonPath": "/home/soya/anaconda3/envs/tensor27/bin/python",
+    "cmake.configureOnOpen": false
 }
