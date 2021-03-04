@@ -23,9 +23,9 @@ def parser():
                         help="display bbox coordinates of detected objects")
     parser.add_argument("--config_file", default="yolov4-tiny_kudos_with_3class.cfg",
                         help="path to config file")
-    parser.add_argument("--data_file", default="kudos_obj.data",
+    parser.add_argument("--data_file", default="kudos_obj_with_3class.data",
                         help="path to data file")
-    parser.add_argument("--thresh", type=float, default=.40,
+    parser.add_argument("--thresh", type=float, default=.20,
                         help="remove detections with confidence below this value")
     return parser.parse_args()
 
