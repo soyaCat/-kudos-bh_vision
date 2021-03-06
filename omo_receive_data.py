@@ -6,7 +6,7 @@ import time
 import cv2
 
 
-host_address = "tcp://localhost:9010"
+host_address = "tcp://192.168.215.147:9010"
 
 class DataFormatTransfer():
     def __init__(self):
@@ -95,7 +95,8 @@ if __name__ == '__main__':
         omo_send_list = np.array(omo_send_list)
         znp.send_array(socket, omo_send_list)
 
-        print(ballCenter)
+        omo_send_list = ballCenter
+        omo_send_list = np.array(omo_send_list)
         znp.send_array(socket2, omo_send_list)
         received_npArr = znp.recv_array(socket2)
 
