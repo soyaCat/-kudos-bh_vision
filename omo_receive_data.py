@@ -80,14 +80,14 @@ if __name__ == '__main__':
     kudos_darknet.check_arguments_errors(darknet_config_args)
     darknet_network, darknet_class_names, darknet_class_colors, darknet_width, darknet_height = kudos_darknet.Initialize_darknet(darknet_config_args)
     cap = cv2.VideoCapture(0)
-    for request in range(100):
+    while 1:
         frame = znp.recv_array(socket)
         ret = True
         #ret, frame = cap.read()
         ballCenter = [-1.0, -1.0]
         frame, detections = kudos_darknet.getResults_with_darknet(ret, frame, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
         cv2.imshow("showIMG", frame)
-        ballCenter = DataFormatTransfer.get_one_center_from_detections(detections, label='ball')
+        ballCenter = DataFormatTransfer.get_one_center_from_detections(detections, label='person')
         k = cv2.waitKey(1) 
         if k == 27:
             break

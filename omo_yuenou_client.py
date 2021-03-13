@@ -62,7 +62,7 @@ def get_socket_and_send_ini_message(host_adress):
 
 if __name__ == '__main__':
     socket = get_socket_and_send_ini_message(host_address)
-    for request in range(100):
+    while 1:
         frame = znp.recv_array(socket)
         print(frame)
         omo_send_list = [0.666]

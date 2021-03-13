@@ -15,15 +15,15 @@ def parser():
                         help="video source. If empty, uses webcam 0 stream")
     parser.add_argument("--out_filename", type=str, default="",
                         help="inference video name. Not saved if empty")
-    parser.add_argument("--weights", default="yolov4-tiny.weights",
+    parser.add_argument("--weights", default="yolov4-tiny_kudos_with_3class.weights",
                         help="yolo weights path")
     parser.add_argument("--dont_show", action='store_true',
                         help="windown inference display. For headless systems")
     parser.add_argument("--ext_output", action='store_true',
                         help="display bbox coordinates of detected objects")
-    parser.add_argument("--config_file", default="./cfg/yolov4-tiny.cfg",
+    parser.add_argument("--config_file", default="./cfg/yolov4-tiny_kudos_with_3class.cfg",
                         help="path to config file")
-    parser.add_argument("--data_file", default="./cfg/coco.data",
+    parser.add_argument("--data_file", default="./kudos_obj_with_3class.data",
                         help="path to data file")
     parser.add_argument("--thresh", type=float, default=.25,
                         help="remove detections with confidence below this value")
