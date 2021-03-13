@@ -4,6 +4,7 @@ import numpy as np
 import time
 import cv2
 
+#robot Server!
 if __name__ == '__main__':
     context = zmq.Context()
     socket = context.socket(zmq.REP)
@@ -17,9 +18,6 @@ if __name__ == '__main__':
         np.shape(frame)
         if np.any(frame) != False:
             znp.send_array(socket, frame)
-
-        position_list = [0.666,0.999,0.444,0.222]
-        position_npArr = np.array(position_list)
+            
         received_npArr = znp.recv_array(socket)
-        time.sleep(2)
 
