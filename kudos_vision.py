@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import darknet
 import rospy
-from darknetA.msg import position
+from darkneta.msg import position
 import kudos_darknet
 from collections import deque
 import time
