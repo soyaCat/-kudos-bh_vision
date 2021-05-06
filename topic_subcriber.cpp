@@ -4,7 +4,7 @@
 // 메시지를수신하였을때동작하는함수이다
 // 입력메시지로는ros_tutorials_topic패키지의MsgTutorial메시지를받도록되어있다
 
-void msgCallback(const darknetA::position::ConstPtr& msg)
+void msgCallback(const darkneta::position::ConstPtr& msg)
 {
 ROS_INFO("recievemsg= %d", msg->posX); // stamp.sec메시지를표시한다
 ROS_INFO("recievemsg= %d", msg->posY); // stamp.nsec메시지를표시한다
