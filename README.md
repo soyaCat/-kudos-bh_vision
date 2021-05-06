@@ -43,13 +43,13 @@
 ---
 
 # 최신 비전으로 패치방법
-- catkin_ws/src/darknet 폴더를 darknetA로 이름을 바꾼다.
+- catkin_ws/src/darknet 폴더를 darkneta로 이름을 바꾼다.
 - git clone으로 레포지스토리를 복사하거나 zip파일을 다운받는다.
-- darknetA폴더에 복사한 내용물을 넣어준다. 겹치는 파일은 덮어쓰기 처리를 해준다.
+- darkneta폴더에 복사한 내용물을 넣어준다. 겹치는 파일은 덮어쓰기 처리를 해준다.
 - catkin_ws 폴더로 가서 catkin_make수행
-- 오류가 안 났다면 메인폴더/src/darknetA로 가서 아나콘다 가상환경 실행
+- 오류가 안 났다면 메인폴더/src/darkneta로 가서 아나콘다 가상환경 실행
 - python Kudos_test.py를 실행해본다.
-- rosrun darknetA topic_subscriber를 실행해본다.
+- rosrun darkneta topic_subscriber를 실행해본다.
 - python darknet_images.py를 입력해서 darknet 작동을 확인
 - 여기까지 동작하면 패치 성공입니다.
 
@@ -63,14 +63,14 @@
    ---
    
    # 비전 실행 방법
-    - 터미널상에서 cd catkin_ws/src/darknetA로 간다.
+    - 터미널상에서 cd catkin_ws/src/darkneta로 간다.
     - 아나콘다 가상환경을 활성화해준다. source activate tensor27
     - python kudos_vision.py로 비전프로그램을 실행시켜준다.
-    - 비전 결과는 message로 전송되는데 darknetA/position.msg파일을 임포트해주면 메세지를 읽을 수 있다.
+    - 비전 결과는 message로 전송되는데 darkneta/position.msg파일을 임포트해주면 메세지를 읽을 수 있다.
     - 비전 결과를 읽어오는 cpp를 topic_subcriber.cpp에 만들어놓았다. 이것을 참고해서 cpp파일을 수정할 것
-    - 만약 topic_subscriber.cpp를 실행하고 싶다면 다음 명령을 사용한다. rosrun darknetA topic_subscriber
+    - 만약 topic_subscriber.cpp를 실행하고 싶다면 다음 명령을 사용한다. rosrun darkneta topic_subscriber
     >팁  
     >우분투 메인폴더에서 ctrl+h를 누르면 숨겨진 파일들이 보이는데 .bashrc를 gedit으로 열어서 맨 밑에  
-    >cd catkin_ws/src/darknetA  
+    >cd catkin_ws/src/darkneta  
     >source activate tensor27  
     >를 추가해주면 터미널을 열 때마다 darknetA폴더에서 tensor27가상환경이 활성화 되어있는 상태로 터미널을 열 수 있다.
