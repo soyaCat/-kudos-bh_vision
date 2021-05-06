@@ -260,9 +260,7 @@ export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PAT
 ```
 >yolo project download
 ```
-cd ~/catkin_ws/src
-
-git clone https://github.com/AlexeyAB/darknet
+이 레포지스토리에 있는 darknet64efa....zip을 다운받은 이후 압축을 catkin/src에 해지하고 darknet으로 
 
 cd darknet
 
