@@ -1,5 +1,5 @@
 "#!/usr/bin/env python"
-import tensorflow as tf
+# import tensorflow as tf
 import cv2
 import numpy as np
 import darknet
@@ -22,8 +22,8 @@ class priROS():
         pass
 
     def talker(self, posX, posY, goalposX, goalposY):
-        pub = rospy.Publisher('visionPos', position, queue_size=10)
-        rospy.init_node('visiontalker', anonymous = True)
+        pub = rospy.Publisher('visionPos', position, queue_size=1)
+        rospy.init_node('visionPos', anonymous = False)
         message = position()
         message.posX = posX
         message.posY = posY

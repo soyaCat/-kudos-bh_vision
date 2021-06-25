@@ -1,14 +1,13 @@
 "#!/usr/bin/env python"
-import tensorflow as tf
 import cv2
 import numpy as np
 import darknet
 import rospy
-from darknetA.msg import position
+from darkneta.msg import position
 class priROS():
     def talker(self, posX, posY):
         pub = rospy.Publisher('visionPos', position, queue_size=10)
-        rospy.init_node('visiontalker', anonymous = True)
+        rospy.init_node('visionPos', anonymous = False)
         message = position()
         message.posX = posX
         message.posY = posY
