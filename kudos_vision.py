@@ -23,7 +23,7 @@ class priROS():
 
     def talker(self, posX, posY, goalposX, goalposY):
         pub = rospy.Publisher('visionPos', position, queue_size=1)
-        rospy.init_node('visionPos', anonymous = False)
+        rospy.init_node('visionPos', anonymous=False)
         message = position()
         message.posX = posX
         message.posY = posY
@@ -49,7 +49,7 @@ class DataFormatTransfer():
         return objectCenter
 
     def get_mean_center_from_detections(self, detections, label):
-        objectCenter = [-1.0,-1.0]
+        objectCenter = [-1.0, -1.0]
         object_width_list = []
         object_height_list = []
         detect_flag = False
