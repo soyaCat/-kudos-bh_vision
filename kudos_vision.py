@@ -12,10 +12,14 @@ import zmq
 import zmqnumpy as znp
 
 detect_from_virtual_ENV = False
+save_input_video = False
 #capture_target = "test_flag.mp4" #-1
 capture_target = -1
 #host_address = "tcp://192.168.0.20:9010"
 host_address = "tcp://localhost:9010"
+default_x = -100.0
+default_y = -100.0
+
 
 class priROS():
     def __init__(self):
@@ -23,7 +27,7 @@ class priROS():
 
     def talker(self, posX, posY, goalposX, goalposY):
         pub = rospy.Publisher('visionPos', position, queue_size=1)
-        rospy.init_node('visionPos', anonymous=False)
+        rospy.init_node('visionPos', anonymous = False)
         message = position()
         message.posX = posX
         message.posY = posY
@@ -38,7 +42,7 @@ class DataFormatTransfer():
     
     def get_one_center_from_detections(self, detections, label):
         max_confidence = 0
-        objectCenter = [-1.0,-1.0]
+        objectCenter = [default_x ,default_y]
         for detections_index, detection in enumerate(detections):
             #print(detection)#(label, confidence, (left, top, right, bottom))
             if detection[0] == label:
@@ -49,7 +53,7 @@ class DataFormatTransfer():
         return objectCenter
 
     def get_mean_center_from_detections(self, detections, label):
-        objectCenter = [-1.0, -1.0]
+        objectCenter = [default_x ,default_y]
         object_width_list = []
         object_height_list = []
         detect_flag = False
@@ -66,11 +70,15 @@ class DataFormatTransfer():
         return objectCenter
 
     def mapping_point_to_float_shape(self, npArr, objectCenter):
-        if objectCenter != [-1.0, -1.0]:
+        if objectCenter != [default_x, default_y]:
             im_width_size = np.shape(npArr)[0]
             im_hight_size = np.shape(npArr)[1]
             objectCenter[0] = objectCenter[0]/im_width_size
             objectCenter[1] = objectCenter[1]/im_hight_size
+            objectCenter[0] = (objectCenter[0] - 0.5)
+            objectCenter[1] = (objectCenter[1] - 0.5)
+
+
 
         return objectCenter
 
@@ -90,8 +98,13 @@ if __name__=='__main__':
     darknet_network, darknet_class_names, darknet_class_colors, darknet_width, darknet_height = kudos_darknet.Initialize_darknet(darknet_config_args)
     if detect_from_virtual_ENV == False:
         cap = cv2.VideoCapture(capture_target)
+        cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
     else:
         socket = get_socket_and_send_ini_message(host_address)
+    
+    if save_input_video == True:
+        fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+        out = cv2.VideoWriter('save.avi', fourcc, 25.0,(640,480))
     priROS = priROS()
     DataFormatTransfer = DataFormatTransfer()
 
@@ -101,9 +114,11 @@ if __name__=='__main__':
         else:
             frame = znp.recv_array(socket)
             ret = True
+        if save_input_video == True:
+            out.write(frame)
         frame, detections = kudos_darknet.getResults_with_darknet(ret, frame, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
-        ballCenter = [-1.0, -1.0]
-        goalCenter = [-1.0, -1.0]
+        ballCenter = [-100.0, -100.0]
+        goalCenter = [-100.0, -100.0]
         if np.any(frame) != False:
             cv2.imshow("showIMG", frame)
             ballCenter = DataFormatTransfer.get_one_center_from_detections(detections, label='ball')
