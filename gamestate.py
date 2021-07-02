@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
 from construct import Byte, Struct, Enum, Bytes, Const, Array, Int16ul, Int32ul, PaddedString, Flag, Int16sl
 
 Short = Int16ul
@@ -83,3 +80,4 @@ ReturnData = Struct(
     "player" / Byte,
     "message" / Byte
 )
+

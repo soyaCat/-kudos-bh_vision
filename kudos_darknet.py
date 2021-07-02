@@ -21,11 +21,11 @@ def parser():
                         help="windown inference display. For headless systems")
     parser.add_argument("--ext_output", action='store_true',
                         help="display bbox coordinates of detected objects")
-    parser.add_argument("--config_file", default="./yolov4-tiny_kudos_with_3class.cfg",
+    parser.add_argument("--config_file", default="yolov4-tiny_kudos_with_3class.cfg",
                         help="path to config file")
     parser.add_argument("--data_file", default="./kudos_obj_with_3class.data",
                         help="path to data file")
-    parser.add_argument("--thresh", type=float, default=.80,
+    parser.add_argument("--thresh", type=float, default=.30,
                         help="remove detections with confidence below this value")
     return parser.parse_args()
 
@@ -80,8 +80,7 @@ def open_Threads(network, class_names, class_colors ,width, height, cap, frame_q
 def getResults_with_darknet(ret, frame, darknet_input_width, darknet_input_height, darknet_network, darknet_class_names, darknet_class_colors,config_args):
     if ret != False:
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame_resized = cv2.resize(frame_rgb, (darknet_input_width, darknet_input_height),
-                                   interpolation=cv2.INTER_LINEAR)
+        frame_resized = cv2.resize(frame_rgb, (darknet_input_width, darknet_input_height), interpolation=cv2.INTER_LINEAR)
         img_for_detect = darknet.make_image(darknet_input_width, darknet_input_height, 3)
         darknet.copy_image_from_bytes(img_for_detect, frame_resized.tobytes())
         prev_time = time.time()

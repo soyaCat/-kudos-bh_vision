@@ -25,7 +25,7 @@ class priROS():
     def __init__(self):
         pass
 
-    def talker(self, posX, posY, goalposX, goalposY):
+    def talker(self, posX, posY, goalposX, goalposY, ball_size):
         pub = rospy.Publisher('visionPos', position, queue_size=1)
         rospy.init_node('visionPos', anonymous = False)
         message = position()
@@ -33,6 +33,7 @@ class priROS():
         message.posY = posY
         message.goalposX = goalposX
         message.goalposY = goalposY
+        message.POS_size = ball_size
         rospy.loginfo(message)
         pub.publish(message)
 
@@ -43,6 +44,7 @@ class DataFormatTransfer():
     def get_one_center_from_detections(self, detections, label):
         max_confidence = 0
         objectCenter = [default_x ,default_y]
+        object_size = 0
         for detections_index, detection in enumerate(detections):
             #print(detection)#(label, confidence, (left, top, right, bottom))
             if detection[0] == label:
@@ -50,7 +52,8 @@ class DataFormatTransfer():
                     max_confidence = detection[1]
                     bbox = detection[2]
                     objectCenter = [bbox[0], bbox[1]]
-        return objectCenter
+                    object_size = (bbox[2]+bbox[3])/2
+        return objectCenter, object_size
 
     def get_mean_center_from_detections(self, detections, label):
         objectCenter = [default_x ,default_y]
@@ -67,12 +70,13 @@ class DataFormatTransfer():
         if detect_flag == True:
             objectCenter = [np.mean(object_width_list), np.mean(object_height_list)]
 
-        return objectCenter
+        return objectCenter, 0
 
-    def mapping_point_to_float_shape(self, npArr, objectCenter):
+    def mapping_point_to_float_shape(self, npArr, objectCenter, objectSize):
         if objectCenter != [default_x, default_y]:
             im_width_size = np.shape(npArr)[0]
             im_hight_size = np.shape(npArr)[1]
+            objectSize = objectSize/((im_width_size+im_hight_size)/2)
             objectCenter[0] = objectCenter[0]/im_width_size
             objectCenter[1] = objectCenter[1]/im_hight_size
             objectCenter[0] = (objectCenter[0] - 0.5)
@@ -80,7 +84,7 @@ class DataFormatTransfer():
 
 
 
-        return objectCenter
+        return objectCenter, objectSize
 
 def get_socket_and_send_ini_message(host_adress):
     context = zmq.Context()
@@ -119,18 +123,19 @@ if __name__=='__main__':
         frame, detections = kudos_darknet.getResults_with_darknet(ret, frame, darknet_width, darknet_height, darknet_network, darknet_class_names, darknet_class_colors,darknet_config_args)
         ballCenter = [-100.0, -100.0]
         goalCenter = [-100.0, -100.0]
+        ball_size = 0
         if np.any(frame) != False:
             cv2.imshow("showIMG", frame)
-            ballCenter = DataFormatTransfer.get_one_center_from_detections(detections, label='ball')
-            ballCenter = DataFormatTransfer.mapping_point_to_float_shape(frame, ballCenter)
-            goalCenter = DataFormatTransfer.get_mean_center_from_detections(detections, label='goal')
-            goalCenter = DataFormatTransfer.mapping_point_to_float_shape(frame, goalCenter)
+            ballCenter, ball_size = DataFormatTransfer.get_one_center_from_detections(detections, label='ball')
+            ballCenter,ball_size = DataFormatTransfer.mapping_point_to_float_shape(frame, ballCenter, ball_size)
+            goalCenter,_ = DataFormatTransfer.get_mean_center_from_detections(detections, label='goal')
+            goalCenter,_ = DataFormatTransfer.mapping_point_to_float_shape(frame, goalCenter, 0)
         posX = ballCenter[0]
         posY = ballCenter[1]
         goalposX = goalCenter[0]
         goalposY = goalCenter[1]
         if detect_from_virtual_ENV == False:
-            priROS.talker(posX, posY, goalposX, goalposY)
+            priROS.talker(posX, posY, goalposX, goalposY, ball_size)
         else:
             position_list = [posX, posY, goalposX, goalposY]
             position_npArr = np.array(position_list)
