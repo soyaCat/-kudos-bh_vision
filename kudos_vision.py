@@ -25,7 +25,7 @@ class priROS():
     def __init__(self):
         pass
 
-    def talker(self, posX, posY, goalposX, goalposY, ball_size):
+    def talker(self, posX, posY, goalposX, goalposY, ball_size, ball_distance):
         pub = rospy.Publisher('visionPos', position, queue_size=1)
         rospy.init_node('visionPos', anonymous = False)
         message = position()
@@ -34,6 +34,7 @@ class priROS():
         message.goalposX = goalposX
         message.goalposY = goalposY
         message.POS_size = ball_size
+        message.POS_distance = ball_distance
         rospy.loginfo(message)
         pub.publish(message)
 
@@ -82,9 +83,51 @@ class DataFormatTransfer():
             objectCenter[0] = (objectCenter[0] - 0.5)
             objectCenter[1] = (objectCenter[1] - 0.5)
 
+        return objectCenter,objectSizefloat32 POS_distancefloat32 POS_distancefloat32 POS_distancefloat32 POS_distance
 
+00 
+    def get_distance_from_ball_size(self, ball_size):
+        distance = -1
+        if ball_size == 0:
+            distance = -1
+        elif ball_size>0.7:
+            distance = 5
+        elif ball_size>0.45:
+            distance = 15
+        elif ball_size>0.38:
+            distance = 25
+        elif ball_size>0.33:
+            distance = 35
+        elif ball_size>0.25:
+            distance = 45
+        elif ball_size>0.21:
+            distance = 55
+        elif ball_size>0.19:
+            distance = 65
+        elif ball_size>0.17:
+            distance = 75
+        elif ball_size>0.16:
+            distance = 85
+        elif ball_size>0.14:
+            distance = 95
+        elif ball_size>0.12:
+            distance = 105
+        elif ball_size>0.11:
+            distance = 115
+        elif ball_size>0.10:
+            distance = 125
+        elif ball_size>0.09:
+            distance = 135
+        elif ball_size>0.08:
+            distance = 155
+        elif ball_size>0.07:
+            distance = 175
+        elif ball_size>0.06:
+            distance = 185
+        else:
+            distance = 200
 
-        return objectCenter, objectSize
+        return distance
 
 def get_socket_and_send_ini_message(host_adress):
     context = zmq.Context()
@@ -132,10 +175,11 @@ if __name__=='__main__':
             goalCenter,_ = DataFormatTransfer.mapping_point_to_float_shape(frame, goalCenter, 0)
         posX = ballCenter[0]
         posY = ballCenter[1]
+        ball_distance = DataFormatTransfer.get_distance_from_ball_size(ball_size)
         goalposX = goalCenter[0]
         goalposY = goalCenter[1]
         if detect_from_virtual_ENV == False:
-            priROS.talker(posX, posY, goalposX, goalposY, ball_size)
+            priROS.talker(posX, posY, goalposX, goalposY, ball_size, ball_distance)
         else:
             position_list = [posX, posY, goalposX, goalposY]
             position_npArr = np.array(position_list)
