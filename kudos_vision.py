@@ -6,6 +6,7 @@ import darknet
 import rospy
 from darkneta.msg import position
 import kudos_darknet
+import kudos_tracker
 from collections import deque
 import time
 import zmq
@@ -25,16 +26,18 @@ class priROS():
     def __init__(self):
         pass
 
-    def talker(self, posX, posY, goalposX, goalposY, ball_size, ball_distance):
+    def talker(self, message_form):
         pub = rospy.Publisher('visionPos', position, queue_size=1)
         rospy.init_node('visionPos', anonymous = False)
         message = position()
-        message.posX = posX
-        message.posY = posY
-        message.goalposX = goalposX
-        message.goalposY = goalposY
-        message.POS_size = ball_size
-        message.POS_distance = ball_distance
+        message.posX = message_form['posX']
+        message.posY = message_form['posY']
+        message.goalposX = message_form['goalposX']
+        message.goalposY = message_form['goalposY']
+        message.POS_size = message_form['ball_size']
+        message.POS_distance = message_form['ball_distance']
+        message.desire_pan = message_form['desire_pan']
+        message.desire_tilt = message_form['desire_tilt']
         rospy.loginfo(message)
         pub.publish(message)
 
@@ -83,9 +86,8 @@ class DataFormatTransfer():
             objectCenter[0] = (objectCenter[0] - 0.5)
             objectCenter[1] = (objectCenter[1] - 0.5)
 
-        return objectCenter,objectSizefloat32 POS_distancefloat32 POS_distancefloat32 POS_distancefloat32 POS_distance
+        return objectCenter, objectSize
 
-00 
     def get_distance_from_ball_size(self, ball_size):
         distance = -1
         if ball_size == 0:
@@ -179,12 +181,22 @@ if __name__=='__main__':
         goalposX = goalCenter[0]
         goalposY = goalCenter[1]
         if detect_from_virtual_ENV == False:
-            priROS.talker(posX, posY, goalposX, goalposY, ball_size, ball_distance)
+            message_form = {
+                'posX':posX,
+                'posY':posY,
+                'goalposX':goalposX,
+                'goalposY':goalposY,
+                'ball_size':ball_size,
+                'ball_distance':ball_distance,
+                'desire_pan':0.0,
+                'desire_tilt':0.0}
+            message_form["desire_pan"], message_form["desite_tilt"] = kudos_tracker.tracking_ball(message_form)
+            priROS.talker(message_form)
         else:
             position_list = [posX, posY, goalposX, goalposY]
             position_npArr = np.array(position_list)
             znp.send_array(socket, position_npArr)
-        k = cv2.waitKey(1) 
+        k = cv2.waitKey(1)
         if k == 27:
             break
     cap.release

@@ -52,16 +52,12 @@
 - rosrun darkneta topic_subscriber를 실행해본다.
 - python darknet_images.py를 입력해서 darknet 작동을 확인
 - 여기까지 동작하면 패치 성공입니다.
+
 - !파이썬이 커스텀 메세지를 임포트하지 못할 때:   
     >참고문서: https://answers.ros.org/question/105711/rospy-custom-message-importerror-no-module-named-msg/  
     >참고문서: https://answers.ros.org/question/271620/importerror-no-module-named-xxxxmsg/
     >- catkin_make 작업 이후에 source devel/setup.bash를 해주었다.  
-    >- 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.  
-  
-- 파이썬 2.7을 위한 pip 설치시에  
-- pip 업그레이드는 주의해야만 합니다 !!!!!!  
-- sudo -H pip2 install --upgrade pip==20.3.4  
-- 잘못하면 먹통남.. 먹통나면 오류가 뜨는 해당 폴더 완전 삭제 후, pip 완전삭제 후, pip 재설치  
+    >- 만약 지속적으로 오류가 발생하는 경우 .bashrc에 source/catkin_ws/devel/setup.bash를 해준다.
     
     
    ---
