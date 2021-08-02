@@ -92,40 +92,8 @@ class DataFormatTransfer():
         distance = -1
         if ball_size == 0:
             distance = -1
-        elif ball_size>0.7:
-            distance = 5
-        elif ball_size>0.45:
-            distance = 15
-        elif ball_size>0.38:
-            distance = 25
-        elif ball_size>0.33:
-            distance = 35
-        elif ball_size>0.25:
-            distance = 45
-        elif ball_size>0.21:
-            distance = 55
-        elif ball_size>0.19:
-            distance = 65
-        elif ball_size>0.17:
-            distance = 75
-        elif ball_size>0.16:
-            distance = 85
-        elif ball_size>0.14:
-            distance = 95
-        elif ball_size>0.12:
-            distance = 105
-        elif ball_size>0.11:
-            distance = 115
-        elif ball_size>0.10:
-            distance = 125
-        elif ball_size>0.09:
-            distance = 135
-        elif ball_size>0.08:
-            distance = 155
-        elif ball_size>0.07:
-            distance = 175
         elif ball_size>0.06:
-            distance = 185
+            distance = 5.8729*((ball_size)**(-1.342))
         else:
             distance = 200
 
